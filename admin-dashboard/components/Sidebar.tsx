@@ -1,19 +1,15 @@
 import Image from "next/image";
 import { AiOutlineHome } from "react-icons/ai";
-import { BsPeople } from "react-icons/bs";
+import { BsPeople, BsTruck } from "react-icons/bs";
 import { TiContacts } from "react-icons/ti";
 import { FiMail } from "react-icons/fi";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 import { useContext, useState } from "react";
 
 const Menus = [
-    { title: "Dashboard"},
-    { title: "Inbox",  },
-    { title: "Accounts", gap: true },
-    { title: "Schedule "},
-    { title: "Search" },
-   
+    { title: "Fleet", icon: <BsTruck />},
+    { title: "Track Trip", gap: false  },
+    { title: "Tickets"},
   ];
 
 const Sidebar = () => {
@@ -28,14 +24,9 @@ const Sidebar = () => {
           >
             
             <div className="flex gap-x-4 items-center">
-              {/* <img
-                src="./src/assets/logo.png"
-                className={`cursor-pointer duration-500 ${
-                  open && "rotate-[360deg]"
-                }`}
-              /> */}
+             
               <h1
-                className={`text-black origin-left font-medium text-xl duration-200 ${
+                className={`text-black origin-left font-bold text-2xl duration-200 ${
                   !open && "scale-0"
                 }`}
               >
@@ -51,7 +42,7 @@ const Sidebar = () => {
                     index === 0 && "bg-light-white"
                   } `}
                 >
-                  {/* <img src={`./src/assets/${Menu.src}.png`} /> */}
+                  {Menus.icon}
                   <span className={`${!open && "hidden"} text-black origin-left duration-200`}>
                     {Menu.title}
                   </span>
