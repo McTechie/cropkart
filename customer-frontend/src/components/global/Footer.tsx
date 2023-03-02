@@ -7,9 +7,9 @@ const footerItems: { [key: string]: string[] }[] = [
       'About Us',
       'Careers',
       'Press Releases',
-      'Techiebay Cares',
+      'CropKart Cares',
       'Gift a Smile',
-      'Techiebay Science'
+      'CropKart Science'
     ]
   },
   {
@@ -21,23 +21,23 @@ const footerItems: { [key: string]: string[] }[] = [
   },
   {
     'Make Money with Us': [
-      'Sell on Techiebay',
-      'Sell under Techiebay Accelerator',
-      'Techiebay Global Selling',
+      'Sell on CropKart',
+      'Sell under CropKart Accelerator',
+      'CropKart Global Selling',
       'Become an Affiliate',
-      'Fulfilment by Techiebay',
+      'Fulfilment by CropKart',
       'Advertise Your Products',
-      'Techiebay Pay on Merchants',
+      'CropKart Pay on Merchants',
     ]
   },
   {
     'Let Us Help You': [
-      'COVID-19 and Techiebay',
+      'COVID-19 and CropKart',
       'Your Account',
       'Returns Centre',
       '100% Purchase Protection',
-      'Techiebay App Download',
-      'Techiebay Assistant Download',
+      'CropKart App Download',
+      'CropKart Assistant Download',
       'Help',
     ]
   }
