@@ -17,7 +17,7 @@ interface TrackInfo {
 
   ];
   
-  const TrackTable: React.FC TrackInfo> = () => {
+  const TrackTable: React.FC<TrackInfo> = () => {
     return (
         <>
         <div className="mx-10">
