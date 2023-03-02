@@ -10,5 +10,5 @@ type Product = {
   name: string;
   image: string;
   price: number;
-  count: number;
+  count?: number;
 }
