@@ -14,7 +14,7 @@ interface TicketInfo {
 
   ];
   
-  const TicketTable: React.FC ticketInfo> = () => {
+  const TicketTable: React.FC <TicketInfo> = () => {
     return (
         <>
         <div className="mx-10">
@@ -29,7 +29,7 @@ interface TicketInfo {
             </tr>
             </thead>
             <tbody>
-            {ticketInfo.map((ticket) => (
+            {TicketInfo.map((ticket) => (
                 <tr key={ticket.id} className="hover:bg-gray-200">
                 <td className="px-4 py-2">{ticket.id}</td>
                 <td className="px-4 py-2">{ticket.type}</td>

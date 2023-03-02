@@ -15,7 +15,7 @@ type LayoutProps = {
   
     return (
       <>
-         <div className="flex bg-green-600 ">
+         <div className="flex bg-emerald-600 ">
         <Sidebar />
         <main className="w-full" >
           <Navbar />
