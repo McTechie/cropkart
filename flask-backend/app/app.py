@@ -2,6 +2,8 @@ from flask import Flask
 from flask_restx import Api, Resource, fields
 from flask_sqlalchemy import SQLAlchemy
 # from celery_config import *
+import requests
+from bs4 import BeautifulSoup
 
 from celery.schedules import crontab
 
@@ -98,7 +100,92 @@ class ProductDetail(Resource):
         product.price_wholesale = data['price_wholesale']
         db.session.commit()
         return product
+@api.route('/fetchveg')
+class VegPrices(Resource):
+    def get(self):
+        # Make a request to the website
+        url = "https://vegetablemarketprice.com/market/maharashtra/today"
+        response = requests.get(url)
+
+        # Create a BeautifulSoup object
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Find the table on the webpage
+        table = soup.find('table')
+
+        # Find the table headers
+        headers = []
+        for th in table.find_all('th'):
+            headers.append(th.text.strip())
+
+        # Find the table rows with id=todayVetableTableRows
+        rows = []
+        for tr in table.find_all('tr', {'class': 'todayVetableTableRows'}):
+            row = []
+            for td in tr.find_all('td'):
+                row.append(td.text.strip())
+            rows.append(row)
+
+        # Create the pandas DataFrame
+        # df = pd.DataFrame(rows, columns=headers)
+
+        # Print the DataFrame
+        list_of_rows = [rows[0][i:i+6] for i in range(0, len(rows[0]), 6)]
+        response=[]
+        for row in list_of_rows:
+            res={
+                'name':row[1],
+                'wholesale_price':row[2],
+                'type':'vegetable',
+                'retail_price':row[3][0]+row[3][6:]
+            }
+            response.append(res)
+        return(response)
     
+
+@api.route('/fetchfruits')
+class VegPrices(Resource):
+    def get(self):
+        # Make a request to the website
+        url = "https://vegetablemarketprice.com/fruits/kerala/today"
+        response = requests.get(url)
+
+        # Create a BeautifulSoup object
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Find the table on the webpage
+        table = soup.find('table')
+
+        # Find the table headers
+        headers = []
+        for th in table.find_all('th'):
+            headers.append(th.text.strip())
+
+        # Find the table rows with id=todayVetableTableRows
+        rows = []
+        for tr in table.find_all('tr', {'class': 'todayVetableTableRows'}):
+            row = []
+            for td in tr.find_all('td'):
+                row.append(td.text.strip())
+            rows.append(row)
+
+        # Create the pandas DataFrame
+        # df = pd.DataFrame(rows, columns=headers)
+
+        # Print the DataFrame
+        list_of_rows = [rows[0][i:i+6] for i in range(0, len(rows[0]), 6)]
+        response=[]
+        for row in list_of_rows:
+            res={
+                'name':row[1],
+                'type':'fruit',
+                'wholesale_price':row[2],
+                'retail_price':row[3][0]+row[3][6:]
+            }
+            response.append(res)
+        return(response)
+
+
 with app.app_context():
     db.create_all()
 
