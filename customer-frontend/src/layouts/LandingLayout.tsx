@@ -1,7 +1,7 @@
 // named imports
 import { useEffect } from 'react'
 import { Nunito_Sans } from 'next/font/google'
-import { Header } from '../components'
+import { Footer, Header } from '../components'
 import { useAppDispatch } from '../redux/hooks'
 import { setLocation } from '../redux/slices/locationSlice'
 
@@ -58,11 +58,11 @@ const LandingLayout = ({ children }: LandingLayoutProps) => {
 
       <Header />
 
-      {/* <Location /> */}
-
-      <main className='min-w-screen-xl min-h-screen mx-auto bg-gray-100'>
+      <main className='min-h-screen mx-auto bg-white text-gray-600'>
         {children}
       </main>
+
+      <Footer />
     </div>
   )
 }

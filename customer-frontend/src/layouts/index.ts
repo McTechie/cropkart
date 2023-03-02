@@ -4,4 +4,4 @@
  * importing them from multiple paths.
  */
 
-export { default as Landing } from './Landing'
+export { default as LandingLayout } from './LandingLayout'

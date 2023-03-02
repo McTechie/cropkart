@@ -1,8 +1,8 @@
 // named imports
 import { MouseEvent, useState } from 'react'
 import { ChevronDownIcon, GlobeAsiaAustraliaIcon, MapPinIcon } from '@heroicons/react/20/solid'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { setLocation } from '../redux/slices/locationSlice'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { setLocation } from '../../redux/slices/locationSlice'
 
 // default imports
 import Link from 'next/link'
@@ -76,7 +76,7 @@ const Header = () => {
       </nav>
       
       {/* navbar for desktop screens */}
-      <nav className='relative max-w-screen-lg mx-auto hidden md:flex text-gray-600 py-4 px-6 justify-between items-center space-x-20'>
+      <nav className='relative max-w-screen-lg mx-auto hidden md:flex bg-white text-gray-600 py-4 px-6 justify-between items-center space-x-20'>
         {/* navbar brand */}
         <Link href='/'>
           <h1 className='text-3xl font-bold'>

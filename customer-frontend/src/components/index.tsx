@@ -4,4 +4,9 @@
  * importing them from multiple paths.
  */
 
-export { default as Header } from './Header'
+// global components
+export { default as Header } from './global/Header'
+export { default as Footer } from './global/Footer'
+
+// home page components
+export { default as ListingSection } from './home/ListingSection'
