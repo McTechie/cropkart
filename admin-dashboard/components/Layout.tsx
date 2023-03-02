@@ -1,3 +1,4 @@
+import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
 type LayoutProps = {
@@ -10,20 +11,17 @@ type LayoutProps = {
   };
 
   export default function Layout({ children }: LayoutProps) {
-    const sidebarNavItems: SidebarNavItem[] = [
-      { label: "Dashboard", href: "/dashboard" },
-      { label: "Users", href: "/users" },
-      { label: "Settings", href: "/settings" },
-    ];
+   
   
     return (
       <>
-        <div className="flex bg-green-600 ">
-          <Sidebar  />
-          <main >
-            {children}
-          </main>
-        </div>
+         <div className="flex bg-green-600 ">
+        <Sidebar />
+        <main className="w-full" >
+          <Navbar />
+          {children}
+        </main>
+      </div>
       </>
     );
   }

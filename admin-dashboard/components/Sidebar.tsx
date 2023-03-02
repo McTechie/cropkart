@@ -20,18 +20,13 @@ const Sidebar = () => {
     const [open, setOpen] = useState(true);
 
      return (
-        <div className="flex  bg-white ">
+        <div className="flex  bg-white z-50 ">
           <div
             className={` ${
               open ? "w-72" : "w-20 "
             } bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
           >
-            <img
-              src="./src/assets/control.png"
-              className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-               border-2 rounded-full  ${!open && "rotate-180"}`}
-              onClick={() => setOpen(!open)}
-            />
+            
             <div className="flex gap-x-4 items-center">
               {/* <img
                 src="./src/assets/logo.png"
