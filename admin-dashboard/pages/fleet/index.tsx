@@ -1,20 +1,18 @@
 interface FleetInfo {
-    id: number;
-    name: string;
-    type: string;
-    capacity: number;
-    region: string;
-    cost: number;
-    status: string;
+    licensenumber: number;
+    vehiclenumber: string;
+    drivername: string;
+    phoneno: number;
+    
   }
   
   const fleetInfo: FleetInfo[] = [
-    { id: 1, name: 'Ship 1', type: 'Container Ship', capacity: 10000, region : 'Surat', cost : 100000, status : 'Active' },
-    { id: 1, name: 'Ship 1', type: 'Container Ship', capacity: 10000, region : 'Surat', cost : 100000, status : 'Active' },
-    { id: 1, name: 'Ship 1', type: 'Container Ship', capacity: 10000, region : 'Surat', cost : 100000, status : 'Active'},
-    { id: 1, name: 'Ship 1', type: 'Container Ship', capacity: 10000, region : 'Surat', cost : 100000, status : 'Active'},
-    { id: 1, name: 'Ship 1', type: 'Container Ship', capacity: 10000, region : 'Surat', cost : 100000, status : 'Active'},
-    { id: 1, name: 'Ship 1', type: 'Container Ship', capacity: 10000, region : 'Surat', cost : 100000, status : 'Active'},
+    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
 
   ];
   
@@ -26,25 +24,21 @@ interface FleetInfo {
         <table className="bg-slate-50 rounded-md min-w-full ">
             <thead>
             <tr>
-                <th className="border-b px-4 py-2">ID</th>
-                <th className="border-b px-4 py-2">Name</th>
-                <th className="border-b px-4 py-2">Type</th>
-                <th className="border-b px-4 py-2">Capacity</th>
-                <th className="border-b px-4 py-2">Region</th>
-                <th className="border-b px-4 py-2">Cost</th>
-                <th className="border-b px-4 py-2">Status</th>
+                <th className="border-b px-4 py-2">Driver Licence Number</th>
+                <th className="border-b px-4 py-2">Vehicle Number</th>
+                <th className="border-b px-4 py-2">Driver Name</th>
+                <th className="border-b px-4 py-2">Phone Number</th>
+                
             </tr>
             </thead>
             <tbody>
             {fleetInfo.map((fleet) => (
-                <tr key={fleet.id} className="hover:bg-gray-200">
-                <td className="px-4 py-2">{fleet.id}</td>
-                <td className="px-4 py-2">{fleet.name}</td>
-                <td className="px-4 py-2">{fleet.type}</td>
-                <td className="px-4 py-2">{fleet.capacity}</td>
-                <td className="px-4 py-2">{fleet.region}</td>
-                <td className="px-4 py-2">{fleet.cost}</td>
-                <td className="px-4 py-2">{fleet.status}</td>
+                <tr key={fleet.licensenumber} className="hover:bg-gray-200">
+                <td className="px-4 py-2">{fleet.licensenumber}</td>
+                <td className="px-4 py-2">{fleet.vehiclenumber}</td>
+                <td className="px-4 py-2">{fleet.drivername}</td>
+                <td className="px-4 py-2">{fleet.phoneno}</td>
+               
                 </tr>
             ))}
             </tbody>
