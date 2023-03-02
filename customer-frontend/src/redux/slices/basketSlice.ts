@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // Define a type for the slice state
 interface basketState {
-  items: Product[]
+  items: BasketItem[]
 }
 
 // Define the initial state using that type
@@ -15,10 +15,10 @@ export const basketSlice = createSlice({
   name: 'basket',
   initialState,
   reducers: {
-    fetchBasketFromStorage: (state, action: PayloadAction<Product[]>) => {
+    fetchBasketFromStorage: (state, action: PayloadAction<BasketItem[]>) => {
       state.items = action.payload
     },
-    addToBasket: (state, action: PayloadAction<Product>) => {
+    addToBasket: (state, action: PayloadAction<BasketItem>) => {
       const index = state.items.findIndex(item => item.id === action.payload.id)
       
       let newBasket = [...state.items]
@@ -31,7 +31,7 @@ export const basketSlice = createSlice({
 
       state.items = newBasket
     },
-    removeFromBasket: (state, action: PayloadAction<Product>) => {
+    removeFromBasket: (state, action: PayloadAction<BasketItem>) => {
       const index = state.items.findIndex(item => item.id === action.payload.id)
 
       let newBasket = [...state.items]
@@ -46,7 +46,7 @@ export const basketSlice = createSlice({
 
       state.items = newBasket
     },
-    removeAllFromBasket: (state, action: PayloadAction<Product>) => {
+    removeAllFromBasket: (state, action: PayloadAction<BasketItem>) => {
       const index = state.items.findIndex(item => item.id === action.payload.id)
 
       let newBasket = [...state.items]

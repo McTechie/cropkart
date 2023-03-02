@@ -1,4 +1,4 @@
-type User ={
+type User = {
   id: string;
   email: string;
   name: string;
@@ -11,4 +11,12 @@ type Product = {
   image: string;
   price: number;
   count?: number;
+}
+
+type BasketItem = {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  count: number;
 }
