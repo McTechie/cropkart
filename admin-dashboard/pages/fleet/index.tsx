@@ -1,3 +1,9 @@
+import { app ,database} from '../../firebaseConfig';
+import { useState, useEffect } from 'react';
+import { collection, getDocs, query } from "@firebase/firestore";
+
+const dbInstance = collection(database, 'fleet');
+
 interface FleetInfo {
     licensenumber: number;
     vehiclenumber: string;
@@ -6,17 +12,32 @@ interface FleetInfo {
     
   }
   
-  const fleetInfo: FleetInfo[] = [
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  // const fleetInfo: FleetInfo[] = [
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
 
-  ];
+  // ];
   
   const FleetTable: React.FC<FleetInfo> = () => {
+      const [fleetInfo, setFleetInfo] = useState<any[]>([]);
+      const fleetData=async()=>{
+        const q = query(collection(database, "fleet"));
+
+        const querySnapshot = await getDocs(q);
+        var docs: any[]=[];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          docs=[...docs,doc.data()]
+        })
+        setFleetInfo(docs);
+      }
+      useEffect(() => {
+          fleetData();
+        },[]);
     return (
         <>
         <div className="mx-10">
@@ -24,7 +45,7 @@ interface FleetInfo {
         <table className="bg-slate-50 rounded-md min-w-full ">
             <thead>
             <tr>
-                <th className="border-b px-4 py-2">Driver Licence Number</th>
+                <th className="border-b px-2 py-2">Driver Licence Number</th>
                 <th className="border-b px-4 py-2">Vehicle Number</th>
                 <th className="border-b px-4 py-2">Driver Name</th>
                 <th className="border-b px-4 py-2">Phone Number</th>
@@ -41,6 +62,7 @@ interface FleetInfo {
                
                 </tr>
             ))}
+
             </tbody>
         </table>
         </div>
