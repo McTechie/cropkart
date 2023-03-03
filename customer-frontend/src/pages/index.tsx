@@ -2,8 +2,12 @@
 import type { GetServerSideProps, NextPage } from 'next'
 
 // named imports
+import { useEffect } from 'react'
 import { LandingLayout } from '../layouts'
 import { ListingSection } from '../components'
+import { auth } from '../firebase'
+import { useAppDispatch } from '../redux/hooks'
+import { setUser } from '../redux/slices/userSlice'
 
 interface HomePageProps {
   fruitsData: Product[]
@@ -11,13 +15,30 @@ interface HomePageProps {
 }
 
 const Home: NextPage<HomePageProps> = ({ fruitsData, veggiesData }) => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    const user = auth.currentUser
+
+    if (user) {
+      dispatch(setUser({
+        id: user.uid!,
+        email: user.email!,
+        name: user.displayName!,
+        phone: user.phoneNumber!,
+      }))
+    }
+  }, [])
+
   return (
     <LandingLayout>
-      <ListingSection
-        highlightBg
-        title='Fresh Fruits to choose from'
-        data={fruitsData}
-      />
+      <div className='mt-16 md:mt-0'>
+        <ListingSection
+          highlightBg
+          title='Fresh Fruits to choose from'
+          data={fruitsData}
+        />
+      </div>
       <ListingSection
         title='Delicious Veggies for your palette'
         data={veggiesData}

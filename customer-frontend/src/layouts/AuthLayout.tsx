@@ -12,6 +12,7 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   const router = useRouter()
+  
   return (
     <div>
       <Head>

@@ -1,19 +1,25 @@
 // named imports
-import { useRef, useState } from 'react'
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { useRef } from 'react'
+import { ConfirmationResult, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { auth } from '../../firebase'
 
 interface LoginFormProps {
-  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'register'>>
+  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'register' | 'validate'>>
+  setConfirmationMessage: React.Dispatch<React.SetStateAction<ConfirmationResult | null>>
 }
 
-const LoginForm = ({ setCurrentForm }: LoginFormProps) => {
+const LoginForm = ({ setCurrentForm, setConfirmationMessage }: LoginFormProps) => {
   const phoneRef = useRef<HTMLInputElement>(null)
-  const codeRef = useRef<HTMLInputElement>(null)
 
-  const [showCodeInput, setShowCodeInput] = useState<boolean>(false)
+  const setUpRecaptcha = async (number: string) => {
+    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-verifier', {}, auth)
+ 
+    recaptchaVerifier.render()
 
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    return signInWithPhoneNumber(auth, number, recaptchaVerifier)
+  }
+
+  const getCode = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     const phone = phoneRef.current?.value
@@ -21,9 +27,14 @@ const LoginForm = ({ setCurrentForm }: LoginFormProps) => {
     if (!phone) return
 
     try {
-      console.log('Verifying ReCaptcha and Proceeding to Login...')
+      const response = await setUpRecaptcha(phone)
+
+      console.log(response)
+      
+      setConfirmationMessage(response)
+      setCurrentForm('validate')
     } catch (error) {
-      console.log(error)
+      alert('Enter a valid phone number')
     }
   }
 
@@ -33,47 +44,25 @@ const LoginForm = ({ setCurrentForm }: LoginFormProps) => {
         Login
       </h2>
 
-      {showCodeInput ? (
-        <>
-          <input
-            ref={codeRef}
-            name='code'
-            id='code'
-            type='text'
-            placeholder='Your Code'
-            className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
-          />
+      <input
+        ref={phoneRef}
+        name='phone'
+        id='phone'
+        type='tel'
+        placeholder='Phone'
+        className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
+      />
 
-          <button
-            id='sign-in-button'
-            onClick={handleLogin}
-            className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
-          >
-            Submit Code
-          </button>
-        </>
-      ) : (
-        <>
-          <input
-            ref={phoneRef}
-            name='phone'
-            id='phone'
-            type='tel'
-            placeholder='Phone'
-            className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
-          />
+      <button
+        onClick={getCode}
+        className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
+      >
+        Send One Time Password
+      </button>
 
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              setShowCodeInput(true)
-            }}
-            className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
-          >
-            Send One Time Password
-          </button>
-        </>
-      )}
+      <div className='flex items-center justify-center mb-6 -mt-3'>
+        <div id='recaptcha-verifier' />
+      </div>
 
       <div>
         <div className='w-full border' />

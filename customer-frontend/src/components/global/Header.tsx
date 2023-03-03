@@ -1,15 +1,22 @@
 // named imports
 import { MouseEvent, useState } from 'react'
-import { ChevronDownIcon, GlobeAsiaAustraliaIcon, MapPinIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import { useRouter } from 'next/router'
+import { signOut } from 'firebase/auth'
+import { BackspaceIcon, ChevronDownIcon, ClockIcon, GlobeAsiaAustraliaIcon, MapPinIcon, ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { setLocation } from '../../redux/slices/locationSlice'
+import { auth } from '../../firebase'
 
 // default imports
 import Link from 'next/link'
 
 const Header = () => {
+  const router = useRouter()
+
+  // redux logic
   const dispatch = useAppDispatch()
   const location = useAppSelector(state => state.location.city)
+  const user = useAppSelector(state => state.user)
 
   const [isLocationModalOpen, setIsLocationModalOpen] = useState<boolean>(false)
 
@@ -40,22 +47,69 @@ const Header = () => {
     }
   }
 
+  const handleLogout = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const confirmLogout = confirm('Are you sure you want to logout?')
+
+    if (!confirmLogout) return
+
+    try {
+      await signOut(auth)
+      router.reload()
+    } catch (error) {
+      alert('Error logging out')
+    }
+  }
+
   return (
     <header className='border-b-2 shadow-sm'>
       {/* navbar for mobile screens */}
-      <nav className='sticky top-0 z-50 bg-white shadow-md md:hidden text-gray-600 p-6 flex justify-between'>
-        <Link href='/login'>
-          <UserCircleIcon className='h-10 w-10 text-gray-600' />
-        </Link>
+      <nav className={`fixed top-0 left-0 w-full z-50 bg-white shadow-md md:hidden text-gray-600 py-3 flex ${user ? 'justify-center' : 'justify-between'}`}>
+        {!user && (
+          <Link href='/login'>
+            <UserCircleIcon className='h-10 w-10 text-gray-600' />
+          </Link>
+        )}
 
-        <h1 className='text-3xl font-bold'>
-          <span>crop</span>
-          <span className='text-emerald-600'>kart</span>
-        </h1>
+        <div className='flex flex-col items-center'>
+          <h1 className='text-4xl font-bold text-center'>
+            <span>crop</span>
+            <span className='text-emerald-600'>kart</span>
+          </h1>
+
+          {/* location */}
+          {location && (
+            <button
+              onClick={handleGetLocation}
+              className='flex space-x-2 items-center mt-2 -mb-2'
+            >
+              <MapPinIcon className='w-4 h-4 text-emerald-600 relative bottom-[0.15rem]' />
+              <span>{location}</span>
+            </button>
+          )}
+        </div>
+        
+        {user && (
+          <div className='fixed bottom-0 left-0 bg-slate-700 text-white w-full h-20 z-50 flex justify-evenly items-center'>
+            <Link href='/orders' className='flex flex-col items-center'>
+              <ClockIcon className='h-7 w-7' />
+              <span className='text-sm mt-1'>Orders</span>
+            </Link>
+            <Link href='/basket' className='flex flex-col items-center'>
+              <ShoppingCartIcon className='h-7 w-7' />
+              <span className='text-sm mt-1'>Basket</span>
+            </Link>
+            <button onClick={handleLogout} className='flex flex-col items-center'>
+              <BackspaceIcon className='h-7 w-7' />
+              <span className='text-sm mt-1'>Logout</span>
+            </button>
+          </div>
+        )}
       </nav>
       
       {/* navbar for desktop screens */}
-      <nav className='relative max-w-screen-lg mx-auto hidden md:flex bg-white text-gray-600 py-4 px-6 justify-between items-center space-x-20'>
+      <nav className='max-w-screen-lg mx-auto hidden md:flex bg-white text-gray-600 py-4 px-6 justify-between items-center space-x-20'>
         {/* navbar brand */}
         <Link href='/'>
           <h1 className='text-3xl font-bold'>
@@ -108,12 +162,30 @@ const Header = () => {
           </button>
         )}
         
-        <Link
-          href='/login'
-          className='text-gray-500 hover:text-gray-800 text-lg opacity-80 font-semibold'
-        >
-          Sign In
-        </Link>
+        {/* user links */}
+        {user ? (
+          <div className='flex space-x-6 text-gray-500 opacity-90'>
+            <Link href='/orders' className='flex space-x-2 hover:text-gray-700 hover:opacity-100 group'>
+              <ClockIcon className='h-6 w-6 group-hover:-translate-y-[0.15rem] group-hover:-translate-x-[0.15rem] transition-all duration-300 ease-in-out' />
+              <span>Orders</span>
+            </Link>
+            <Link href='/basket' className='flex space-x-2 hover:text-gray-700 hover:opacity-100 group'>
+              <ShoppingCartIcon className='h-6 w-6 group-hover:-translate-y-[0.15rem] group-hover:-translate-x-[0.15rem] transition-all duration-300 ease-in-out' />
+              <span>Basket</span>
+            </Link>
+            <button onClick={handleLogout} className='flex space-x-2 hover:text-gray-700 hover:opacity-100 group'>
+              <BackspaceIcon className='h-6 w-6 group-hover:-translate-y-[0.15rem] group-hover:-translate-x-[0.15rem] transition-all duration-300 ease-in-out' />
+              <span>Logout</span>
+            </button>
+          </div>
+        ) : (
+          <Link
+            href='/login'
+            className='text-gray-500 hover:text-gray-800 text-lg opacity-80 font-semibold'
+          >
+            Sign In
+          </Link>
+        )}
       </nav>
     </header>
   )

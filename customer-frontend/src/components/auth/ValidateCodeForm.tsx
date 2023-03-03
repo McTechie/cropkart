@@ -1,53 +1,57 @@
 // named imports
-import { useRef } from 'react'
+import { useRouter } from 'next/router'
+import { ConfirmationResult } from 'firebase/auth'
 
-interface RegisterFormProps {
+interface ValidateCodeFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'register' | 'validate'>>
+  codeRef: React.RefObject<HTMLInputElement>
+  confirmationMessage: ConfirmationResult | null
 }
 
-const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
-  const nameRef = useRef<HTMLInputElement>(null)
-  const emailRef = useRef<HTMLInputElement>(null)
-  const phoneRef = useRef<HTMLInputElement>(null)
+const ValidateCodeForm = ({ setCurrentForm, codeRef, confirmationMessage }: ValidateCodeFormProps) => {
+  const router = useRouter()
+
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const code = codeRef.current?.value
+    
+    if (!code) return
+
+    try {
+      const res = await confirmationMessage?.confirm(code)
+
+      console.log(res)
+
+      router.push('/')
+    } catch (error) {
+      alert('Enter a valid OTP')
+    }
+  }
 
   return (
     <form className='mx-6 md:w-full md:mx-auto bg-white border-2 border-emerald-700 rounded-xl px-4 py-10 md:px-20'>
-      <h2 className='text-4xl text-center mt-2 mb-8 font-light'>
-        Sign Up
+      <h2 className='text-4xl text-center mt-2 mb-10 font-light'>
+        Validate OTP
       </h2>
 
       <input
-        ref={nameRef}
-        name='name'
-        id='name' 
-        type='tel'
-        placeholder='Full Name'
-        className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-4 focus:outline-none'
-      />
-
-      <input
-        ref={emailRef}
-        name='email'
-        id='email' 
-        type='email'
-        placeholder='Email'
-        className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-4 focus:outline-none'
-      />
-
-      <input
-        ref={phoneRef}
-        name='phone'
-        id='phone' 
+        ref={codeRef}
+        name='code'
+        id='phone'
         type='tel'
         placeholder='Phone'
         className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
       />
 
       <button
+        onClick={handleLogin}
         className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
       >
-        Send One Time Password
+        Confirm OTP
       </button>
+
+      <div id='recaptcha-verifier' />
 
       <div>
         <div className='w-full border' />
@@ -69,17 +73,16 @@ const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
 
       <hr />
 
-      <div className='mt-2 text-sm flex space-x-1'>
-        <p>New to CropKart?</p>
+      <div className='mt-2 text-sm text-center'>
         <button
           onClick={() => setCurrentForm('login')}
           className='text-emerald-500'
         >
-          Login Now
+          Go Back
         </button>
       </div>
     </form>
   )
 }
 
-export default RegisterForm
+export default ValidateCodeForm

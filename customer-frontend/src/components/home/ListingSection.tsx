@@ -10,11 +10,11 @@ const ListingSection = ({ highlightBg, title, data }: ListingSectionProps) => {
   return (
     <section className={`${highlightBg ? 'bg-gray-100' : 'bg-white'} px-4 py-10`}>
       <div className='max-w-screen-lg px-6 py-4 mx-auto'>
-        <h2 className='text-2xl font-semibold'>
+        <h2 className='text-3xl md:font-semibold'>
           {title}
         </h2>
 
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4'>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6'>
           {data?.map((item: Product) => (
             <div key={item.id} className='p-4 flex flex-col items-center'>
               <div className='w-32 h-32 relative'>
