@@ -1,14 +1,85 @@
 // named imports
 import { useRef } from 'react'
+import { ConfirmationResult, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { auth, db } from '../../firebase'
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { setUser } from '../../redux/slices/userSlice'
 
 interface RegisterFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'register' | 'validate'>>
+  setConfirmationMessage: React.Dispatch<React.SetStateAction<ConfirmationResult | null>>
 }
 
-const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
+const RegisterForm = ({ setCurrentForm, setConfirmationMessage }: RegisterFormProps) => {
+  // redux logic
+  const dispatch = useAppDispatch()
+  const latitude = useAppSelector(state => state.location.latitude)
+  const longitude = useAppSelector(state => state.location.longitude)
+  const city = useAppSelector(state => state.location.city)
+
+  // form inputs
   const nameRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const phoneRef = useRef<HTMLInputElement>(null)
+
+  // auth handlers
+  const setUpRecaptcha = async (number: string) => {
+    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-verifier', {}, auth)
+ 
+    recaptchaVerifier.render() // renders recaptcha widget
+
+    // check if user exists in db
+    const email: string | undefined = emailRef.current?.value
+
+    const querySnapshot = await getDocs(collection(db, 'customers'))
+    const user = querySnapshot.docs.find(doc => doc.data().email === email)
+
+    // if user exists, return user and confirmation
+    const confirmation = await signInWithPhoneNumber(auth, number, recaptchaVerifier)
+    
+    return { user, confirmation }
+  }
+
+  const getCode = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const name = nameRef.current?.value
+    const email = emailRef.current?.value
+    const phone = phoneRef.current?.value.split(' ').join('')
+
+    if (!name || !email || !phone) {
+      alert('Please fill in all fields')
+      return
+    }
+
+    try {
+      const { user, confirmation } = await setUpRecaptcha(phone)
+
+      if (!user) {
+        // create user in db if user does not exist
+        const userRef = doc(db, 'customers', email)
+
+        await setDoc(userRef, {
+          name,
+          email,
+          phone,
+          location: {
+            latitude,
+            longitude,
+            city,
+          },
+        })
+
+        dispatch(setUser({ name, email, phone }))
+      }
+      
+      setConfirmationMessage(confirmation)
+      setCurrentForm('validate')
+    } catch (error) {
+      alert('Enter a valid phone number')
+    }
+  }
 
   return (
     <form className='mx-6 md:w-full md:mx-auto bg-white border-2 border-emerald-700 rounded-xl px-4 py-10 md:px-20'>
@@ -44,10 +115,15 @@ const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
       />
 
       <button
+        onClick={getCode}
         className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
       >
         Send One Time Password
       </button>
+
+      <div className='flex items-center justify-center mb-6 -mt-3'>
+        <div id='recaptcha-verifier' />
+      </div>
 
       <div>
         <div className='w-full border' />
