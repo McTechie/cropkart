@@ -69,7 +69,7 @@ const nameRef = useRef<HTMLInputElement>(null)
             <div className='mt-2 text-sm flex space-x-1'>
             <p>New to CropKart?</p>
             <button
-                onClick={() => setCurrentForm('login')}
+                // onClick={() => setCurrentForm('login')}
                 className='text-emerald-500'
             >
                 Login Now

@@ -1,3 +1,6 @@
+import { firestore } from 'firebase/app';
+
+
 export const getFirestoreData = async function(collection) {
     const data = [];
   

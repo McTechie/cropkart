@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
+import FleetForm from "../../components/FleetForm";
 import { getFirestoreData } from "../../getFirestroreData";
 
 
@@ -28,6 +29,7 @@ interface FleetInfo {
   const FleetTable: React.FC<FleetTableProps>  = ({ fleetData }) => {
     const [selectedRow, setSelectedRow] = useState<FleetInfo | null>(null);
     const [isTfootOpen, setIsTfootOpen] = useState(false);
+    const [ createFleet, setCreateFleet ] = useState(false);
     console.log(fleetData);
 
     const handleRowClick = (fleet: FleetInfo) => {
@@ -40,16 +42,28 @@ interface FleetInfo {
       }
     };
 
+    const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>, fleet: FleetInfo) => {
+      e.stopPropagation();
+      console.log(fleet)
+    }
+
+    
+    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>, fleet: FleetInfo) => {
+      e.stopPropagation();
+
+    }
+
     return (
         <>
         <div className="mx-10">
         <div className="flex justify-between">
         <h1 className="text-white text-2xl font-semibold mb-10">Fleet Information</h1>
-        
-          <button className="bg-slate-50 hover:bg-slate-200 p-2 text-sm rounded-sm font-medium my-5 flex items-center"><BsPlus className="mr-3 font-bold"/> Create Fleet</button>
-        
+          <button 
+          onClick={() => setCreateFleet(true)}
+          className="bg-slate-50 hover:bg-slate-200 p-2 text-sm rounded-sm font-medium my-5 flex items-center"><BsPlus className="mr-3 font-bold "/> Create Fleet</button>
         </div>
-        <table className="bg-slate-50 rounded-md min-w-full ">
+        {createFleet && (<div className="bg-slate-50 rounded-md min-h-full"><FleetForm /></div>)}
+        {!createFleet && <table className="bg-slate-50 rounded-md min-w-full ">
             <thead>
             <tr>
                 <th className="border-b px-4 py-2">Driver Licence Number</th>
@@ -65,6 +79,13 @@ interface FleetInfo {
                 <td className="px-4 py-2 text-center">{fleet.vehiclenumber}</td>
                 <td className="px-4 py-2 text-center">{fleet.drivername}</td>
                 <td className="px-4 py-2 text-center">{fleet.phoneno}</td>
+                <td className="px-4 py-2 text-center">
+                
+                <button onClick={(e) => handleUpdateClick(e, fleet)} className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Update</button>
+                </td>
+                <td className="px-4 py-2 text-center">
+                <button onClick={(e) => handleDeleteClick(e, fleet)} className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">Delete</button>
+                </td>
     
                 </tr>
             ))}
@@ -97,7 +118,7 @@ interface FleetInfo {
           </tr>
         </tfoot>
       )}
-        </table>
+        </table>}
         </div>
       </>
     );
