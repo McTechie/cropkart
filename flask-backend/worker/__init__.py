@@ -25,9 +25,9 @@ app.config['CELERY_BACKEND'] = "redis://redis:6379/0"
 app.config['CELERY_BROKER_URL'] = "redis://redis:6379/0"
 
 app.config['CELERYBEAT_SCHEDULE'] = {
-    'say-every-5-seconds': {
+    'call-every-5-am': {
         'task': 'call_scrapper',
-        'schedule': crontab(hour=12, minute=44),
+        'schedule': crontab(hour=23, minute=30),
     },
 }
 
