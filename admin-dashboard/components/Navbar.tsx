@@ -1,4 +1,5 @@
 import React from 'react'
+import { FiLogIn, FiLogOut } from 'react-icons/fi'
 
 const Navbar = () => {
   return (
@@ -13,12 +14,11 @@ const Navbar = () => {
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="flex flex-col p-4 mt-4 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0   ">
-            <li>
-              <a href="#" className="block py-2 pl-3 pr-4 text-white rounded   md:p-0 " aria-current="page">Home</a>
+            <li className='flex items-center  cursor-pointer'>
+              <span className='mr-3 text-white'><FiLogOut /></span>
+              <a href="#" className="block py-2 pl-3 pr-4 text-white rounded hover:text-gray-200 md:p-0 " aria-current="page">Logout</a>
             </li>
-            <li>
-              <a href="#" className="block py-2 pl-3 pr-4 rounded md:border-0 text-white  md:p-0  ">About</a>
-            </li>
+            
             
           </ul>
         </div>

@@ -64,7 +64,7 @@ const Sidebar = () => {
                   className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
                   ${Menu.gap ? "mt-9" : "mt-2"} 
                   ${
-                    index === selectedMenu ? " bg-emerald-600" : "text-black"
+                    index === selectedMenu ? " bg-emerald-600 text-white" : "text-black"
                   } `
                 }
                   onClick={() => setSelectedMenu(index)}
