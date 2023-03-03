@@ -1,19 +1,11 @@
 // named imports
 import { useEffect } from 'react'
-import { Nunito_Sans } from 'next/font/google'
 import { Footer, Header } from '../components'
 import { useAppDispatch } from '../redux/hooks'
 import { setLocation } from '../redux/slices/locationSlice'
 
 // default imports
 import Head from 'next/head'
-
-// font style for the dashboard
-const nunito = Nunito_Sans({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--nunito-font',
-})
 
 interface LandingLayoutProps {
   children: React.ReactNode
@@ -50,7 +42,7 @@ const LandingLayout = ({ children }: LandingLayoutProps) => {
   // }, [])
 
   return (
-    <div className={`${nunito.variable} font-sans`}>
+    <div>
       <Head>
         <title>Where India loves to order - CropKart</title>
         <link rel='icon' href='/favicon.ico' />

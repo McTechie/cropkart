@@ -8,5 +8,9 @@
 export { default as Header } from './global/Header'
 export { default as Footer } from './global/Footer'
 
+// auth components
+export { default as LoginForm } from './auth/LoginForm'
+export { default as RegisterForm } from './auth/RegisterForm'
+
 // home page components
 export { default as ListingSection } from './home/ListingSection'

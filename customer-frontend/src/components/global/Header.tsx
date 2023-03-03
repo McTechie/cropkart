@@ -1,6 +1,6 @@
 // named imports
 import { MouseEvent, useState } from 'react'
-import { ChevronDownIcon, GlobeAsiaAustraliaIcon, MapPinIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, GlobeAsiaAustraliaIcon, MapPinIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { setLocation } from '../../redux/slices/locationSlice'
 
@@ -11,7 +11,6 @@ const Header = () => {
   const dispatch = useAppDispatch()
   const location = useAppSelector(state => state.location.city)
 
-  const [isMiniNavbarOpen, setIsMiniNavbarOpen] = useState<boolean>(false)
   const [isLocationModalOpen, setIsLocationModalOpen] = useState<boolean>(false)
 
   const fetchCoordinates = async (latitude: number, longitude: number) => {
@@ -42,37 +41,17 @@ const Header = () => {
   }
 
   return (
-    <header>
+    <header className='border-b-2 shadow-sm'>
       {/* navbar for mobile screens */}
-      <nav className='sticky top-0 z-50 bg-white shadow-md md:hidden text-gray-600 p-6'>
-        <div className='flex justify-between'>
-          <button
-            onClick={() => setIsMiniNavbarOpen(isMiniNavbarOpen => !isMiniNavbarOpen)}
-            className='text-gray-600'
-          >
-            <div className='space-y-2 relative'>
-              <div className={`w-6 h-0.5 bg-gray-600 transition-all ease-in-out duration-300 ${isMiniNavbarOpen ? 'rotate-45 absolute top-0' : 'rotate-0'}`} />
-              <div className={`w-6 h-0.5 bg-gray-600 transition-all ease-in-out duration-300 ${isMiniNavbarOpen ? '-rotate-45' : 'rotate-0'}`} />
-            </div>
-          </button>
+      <nav className='sticky top-0 z-50 bg-white shadow-md md:hidden text-gray-600 p-6 flex justify-between'>
+        <Link href='/login'>
+          <UserCircleIcon className='h-10 w-10 text-gray-600' />
+        </Link>
 
-          <h1 className='text-3xl font-bold'>
-            <span>crop</span>
-            <span className='text-emerald-600'>kart</span>
-          </h1>
-        </div>
-
-        {isMiniNavbarOpen && (
-          <div className='h-screen flex flex-col items-start px-6 py-20 space-y-10 text-2xl opacity-80 font-semibold'>
-            <button className='text-gray-600'>
-              Login
-            </button>
-            <button className='text-gray-600'>
-              Signup
-            </button>
-          </div>
-        )}
-
+        <h1 className='text-3xl font-bold'>
+          <span>crop</span>
+          <span className='text-emerald-600'>kart</span>
+        </h1>
       </nav>
       
       {/* navbar for desktop screens */}
@@ -112,7 +91,8 @@ const Header = () => {
             className='col-span-7 p-2 w-full rounded-lg focus:outline-none'
           />
         </div>
-
+        
+        {/* location modal */}
         {isLocationModalOpen && (
           <button
             className='absolute top-16 left-[8.8rem] w-60 border-2 rounded-lg bg-white px-2 py-2 flex items-start space-x-3 hover:bg-gray-50'
@@ -128,15 +108,12 @@ const Header = () => {
           </button>
         )}
         
-        {/* login and signup buttons */}
-        <div className='flex items-start text-lg opacity-80 font-semibold space-x-6'>
-          <button className='text-gray-500 hover:text-gray-800'>
-            Login
-          </button>
-          <button className='text-gray-500 hover:text-gray-800'>
-            Signup
-          </button>
-        </div>
+        <Link
+          href='/login'
+          className='text-gray-500 hover:text-gray-800 text-lg opacity-80 font-semibold'
+        >
+          Sign In
+        </Link>
       </nav>
     </header>
   )

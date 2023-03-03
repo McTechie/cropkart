@@ -4,4 +4,8 @@
  * importing them from multiple paths.
  */
 
+// home screen
 export { default as LandingLayout } from './LandingLayout'
+
+// auth screens
+export { default as AuthLayout } from './AuthLayout'
