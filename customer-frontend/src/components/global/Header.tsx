@@ -16,7 +16,7 @@ const Header = () => {
   // redux logic
   const dispatch = useAppDispatch()
   const location = useAppSelector(state => state.location.city)
-  const user = useAppSelector(state => state.user)
+  const user = useAppSelector(state => state.user.user)
 
   const [isLocationModalOpen, setIsLocationModalOpen] = useState<boolean>(false)
 
@@ -65,7 +65,7 @@ const Header = () => {
   return (
     <header className='border-b-2 shadow-sm'>
       {/* navbar for mobile screens */}
-      <nav className={`fixed top-0 left-0 w-full z-50 bg-white shadow-md md:hidden text-gray-600 py-3 flex ${user ? 'justify-center' : 'justify-between'}`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 bg-white shadow-md md:hidden text-gray-600 py-3 flex ${user ? 'justify-center' : 'justify-between px-6'}`}>
         {!user && (
           <Link href='/login'>
             <UserCircleIcon className='h-10 w-10 text-gray-600' />

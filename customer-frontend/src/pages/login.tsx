@@ -18,9 +18,21 @@ const Auth: NextPage = () => {
 
   return (
     <AuthLayout>
-      {currentForm === 'login' ? <LoginForm setCurrentForm={setCurrentForm} setConfirmationMessage={setConfirmationMessage} />
-        : currentForm === 'register' ? <RegisterForm setCurrentForm={setCurrentForm} />
-        : <ValidateCodeForm setCurrentForm={setCurrentForm} codeRef={codeRef} confirmationMessage={confirmationMessage} />
+      {currentForm === 'login' ?
+        <LoginForm
+          setCurrentForm={setCurrentForm}
+          setConfirmationMessage={setConfirmationMessage}
+        />
+        : currentForm === 'register' ?
+          <RegisterForm
+            setCurrentForm={setCurrentForm}
+            setConfirmationMessage={setConfirmationMessage}
+          />
+        : <ValidateCodeForm
+            setCurrentForm={setCurrentForm}
+            codeRef={codeRef}
+            confirmationMessage={confirmationMessage}
+          />
       }
     </AuthLayout>
   )

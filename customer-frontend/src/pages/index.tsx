@@ -18,11 +18,10 @@ const Home: NextPage<HomePageProps> = ({ fruitsData, veggiesData }) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const user = auth.currentUser
+    const user = auth?.currentUser
 
     if (user) {
       dispatch(setUser({
-        id: user.uid!,
         email: user.email!,
         name: user.displayName!,
         phone: user.phoneNumber!,

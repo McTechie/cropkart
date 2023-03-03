@@ -1,7 +1,8 @@
 // named imports
 import { useRef } from 'react'
 import { ConfirmationResult, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { auth } from '../../firebase'
+import { auth, db } from '../../firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 interface LoginFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'register' | 'validate'>>
@@ -11,12 +12,15 @@ interface LoginFormProps {
 const LoginForm = ({ setCurrentForm, setConfirmationMessage }: LoginFormProps) => {
   const phoneRef = useRef<HTMLInputElement>(null)
 
+  // auth handlers
   const setUpRecaptcha = async (number: string) => {
     const recaptchaVerifier = new RecaptchaVerifier('recaptcha-verifier', {}, auth)
  
-    recaptchaVerifier.render()
+    recaptchaVerifier.render() // renders recaptcha widget
 
-    return signInWithPhoneNumber(auth, number, recaptchaVerifier)
+    const confirmation = await signInWithPhoneNumber(auth, number, recaptchaVerifier)
+    
+    return confirmation
   }
 
   const getCode = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,14 +28,27 @@ const LoginForm = ({ setCurrentForm, setConfirmationMessage }: LoginFormProps) =
 
     const phone = phoneRef.current?.value
 
-    if (!phone) return
+    if (!phone) {
+      alert('Please enter phone number')
+      return
+    }
 
     try {
-      const response = await setUpRecaptcha(phone)
-
-      console.log(response)
+      // check if user exists in db
+      const querySnapshot = await getDocs(collection(db, 'customers'))
       
-      setConfirmationMessage(response)
+      querySnapshot.forEach(doc => console.log(doc.data()))
+
+      const user = querySnapshot.docs.find(doc => doc.data().phone === phone)
+
+      if (!user) {
+        alert('User does not exist')
+        return
+      }
+
+      const confirmation = await setUpRecaptcha(phone)
+
+      setConfirmationMessage(confirmation)
       setCurrentForm('validate')
     } catch (error) {
       alert('Enter a valid phone number')

@@ -1,5 +1,4 @@
 type User = {
-  id: string;
   email: string;
   name: string;
   phone: string;
@@ -19,4 +18,12 @@ type BasketItem = {
   image: string;
   price: number;
   count: number;
+}
+
+type Order = {
+  id: string;
+  amount: number;
+  shipping: number;
+  images: string[];
+  timestamp: number;
 }
