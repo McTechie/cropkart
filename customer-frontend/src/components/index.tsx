@@ -14,3 +14,6 @@ export { default as RegisterForm } from './auth/RegisterForm'
 
 // home page components
 export { default as ListingSection } from './home/ListingSection'
+
+// orders page components
+export { default as PreviousOrders } from './orders/PreviousOrders'

@@ -50,7 +50,7 @@ const LandingLayout = ({ children }: LandingLayoutProps) => {
 
       <Header />
 
-      <main className='min-h-screen mx-auto bg-white text-gray-600'>
+      <main className='mx-auto bg-white text-gray-600'>
         {children}
       </main>
 
