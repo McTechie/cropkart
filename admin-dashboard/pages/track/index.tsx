@@ -35,11 +35,11 @@ interface TrackInfo {
             <tbody>
             {trackInfo.map((track) => (
                 <tr key={track.id} className="hover:bg-gray-200">
-                <td className="px-4 py-2">{track.id}</td>
-                <td className="px-4 py-2">{track.startlocn}</td>
-                <td className="px-4 py-2">{track.starttime}</td>
-                <td className="px-4 py-2">{track.endlocn}</td>
-                <td className="px-4 py-2">{track.endtime}</td>
+                <td className="px-4 py-2 text-center">{track.id}</td>
+                <td className="px-4 py-2 text-center">{track.startlocn}</td>
+                <td className="px-4 py-2 text-center">{track.starttime}</td>
+                <td className="px-4 py-2 text-center">{track.endlocn}</td>
+                <td className="px-4 py-2 text-center">{track.endtime}</td>
                
                 </tr>
             ))}

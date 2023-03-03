@@ -13,7 +13,6 @@ const nameRef = useRef<HTMLInputElement>(null)
             <h2 className='text-4xl text-center mt-3 mb-8 font-semibold'>
             Sign Up
             </h2>
-
             <input
             ref={nameRef}
             name='name'
