@@ -12,7 +12,7 @@ const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
 
   return (
     <form className='mx-6 md:w-full md:mx-auto bg-white border-2 border-emerald-700 rounded-xl px-4 py-10 md:px-20'>
-      <h2 className='text-4xl text-center mt-2 mb-10 font-light'>
+      <h2 className='text-4xl text-center mt-2 mb-8 font-light'>
         Sign Up
       </h2>
 
@@ -22,7 +22,7 @@ const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
         id='name' 
         type='tel'
         placeholder='Full Name'
-        className='w-full border border-emerald-500 rounded-full p-3 md:text-lg mb-4 focus:outline-none'
+        className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-4 focus:outline-none'
       />
 
       <input
@@ -31,7 +31,7 @@ const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
         id='email' 
         type='email'
         placeholder='Email'
-        className='w-full border border-emerald-500 rounded-full p-3 md:text-lg mb-4 focus:outline-none'
+        className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-4 focus:outline-none'
       />
 
       <input
@@ -40,8 +40,14 @@ const RegisterForm = ({ setCurrentForm }: RegisterFormProps) => {
         id='phone' 
         type='tel'
         placeholder='Phone'
-        className='w-full border border-emerald-500 rounded-full p-3 md:text-lg mb-10 focus:outline-none'
+        className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
       />
+
+      <button
+        className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
+      >
+        Send One Time Password
+      </button>
 
       <div>
         <div className='w-full border' />

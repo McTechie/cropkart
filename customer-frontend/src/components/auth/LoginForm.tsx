@@ -1,5 +1,7 @@
 // named imports
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { auth } from '../../firebase'
 
 interface LoginFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'register'>>
@@ -7,6 +9,23 @@ interface LoginFormProps {
 
 const LoginForm = ({ setCurrentForm }: LoginFormProps) => {
   const phoneRef = useRef<HTMLInputElement>(null)
+  const codeRef = useRef<HTMLInputElement>(null)
+
+  const [showCodeInput, setShowCodeInput] = useState<boolean>(false)
+
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const phone = phoneRef.current?.value
+
+    if (!phone) return
+
+    try {
+      console.log('Verifying ReCaptcha and Proceeding to Login...')
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <form className='mx-6 md:w-full md:mx-auto bg-white border-2 border-emerald-700 rounded-xl px-4 py-10 md:px-20'>
@@ -14,14 +33,47 @@ const LoginForm = ({ setCurrentForm }: LoginFormProps) => {
         Login
       </h2>
 
-      <input
-        ref={phoneRef}
-        name='phone'
-        id='phone' 
-        type='tel'
-        placeholder='Phone'
-        className='w-full border border-emerald-500 rounded-full p-3 md:text-lg mb-10 focus:outline-none'
-      />
+      {showCodeInput ? (
+        <>
+          <input
+            ref={codeRef}
+            name='code'
+            id='code'
+            type='text'
+            placeholder='Your Code'
+            className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
+          />
+
+          <button
+            id='sign-in-button'
+            onClick={handleLogin}
+            className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
+          >
+            Submit Code
+          </button>
+        </>
+      ) : (
+        <>
+          <input
+            ref={phoneRef}
+            name='phone'
+            id='phone'
+            type='tel'
+            placeholder='Phone'
+            className='w-full border border-emerald-500 rounded-full py-3 px-6 md:text-lg mb-6 focus:outline-none'
+          />
+
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              setShowCodeInput(true)
+            }}
+            className='w-full border border-emerald-500 bg-emerald-500 text-white rounded-full p-3 md:text-lg mb-10 flex space-x-2 items-center justify-center'
+          >
+            Send One Time Password
+          </button>
+        </>
+      )}
 
       <div>
         <div className='w-full border' />
