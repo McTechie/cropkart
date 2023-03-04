@@ -47,7 +47,7 @@ const ListingSection = ({ highlightBg, title, data }: ListingSectionProps) => {
                   fill
                   src={item.image}
                   alt={item.name}
-                  className='rounded-full bg-white border-2 p-4 object-contain'
+                  className='rounded-full bg-white p-4 object-cover'
                 />
 
                 {/* product selected styles */}

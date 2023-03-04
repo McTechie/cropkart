@@ -6,6 +6,6 @@ const withPWA = require('next-pwa')({
 module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ['vegetablemarketprice.com'],
+    domains: ['vegetablemarketprice.com', 'images.pexels.com'],
   },
 })
