@@ -73,17 +73,16 @@ const Header = () => {
         )}
 
         <div className='flex flex-col items-center'>
-          <h1 className='text-3xl font-bold relative'>
+          <h1 className='text-4xl font-bold text-center'>
             <span>crop</span>
             <span className='text-emerald-600'>kart</span>
-            <span className='absolute left-0 -bottom-3 text-xs'>Farmers</span>
           </h1>
 
           {/* location */}
           {location && (
             <button
               onClick={handleGetLocation}
-              className='flex space-x-2 justify-center items-center mt-2 -mb-2'
+              className='flex space-x-2 items-center mt-2 -mb-2'
             >
               <MapPinIcon className='w-4 h-4 text-emerald-600 relative bottom-[0.15rem]' />
               <span>{location}</span>
@@ -113,10 +112,9 @@ const Header = () => {
       <nav className='max-w-screen-lg mx-auto hidden md:flex bg-white text-gray-600 py-4 px-6 justify-between items-center space-x-20'>
         {/* navbar brand */}
         <Link href='/'>
-          <h1 className='text-3xl font-bold relative'>
+          <h1 className='text-3xl font-bold'>
             <span>crop</span>
             <span className='text-emerald-600'>kart</span>
-            <span className='absolute left-0 -bottom-3 text-xs'>Farmers</span>
           </h1>
         </Link>
         

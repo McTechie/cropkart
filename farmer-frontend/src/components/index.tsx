@@ -17,6 +17,7 @@ export { default as ListingSection } from './home/ListingSection'
 
 // orders page components
 export { default as PreviousOrders } from './orders/PreviousOrders'
+export { default as Track } from './orders/Track'
 
 // basket page components
 export { default as CurrentBasket } from './basket/CurrentBasket'

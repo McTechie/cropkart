@@ -35,7 +35,7 @@ const LoginForm = ({ setCurrentForm, setConfirmationMessage }: LoginFormProps) =
 
     try {
       // check if user exists in db
-      const querySnapshot = await getDocs(collection(db, 'farmers'))
+      const querySnapshot = await getDocs(collection(db, 'customers'))
       
       querySnapshot.forEach(doc => console.log(doc.data()))
 

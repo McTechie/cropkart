@@ -3,20 +3,20 @@ import type { GetServerSideProps, NextPage } from 'next'
 
 // named imports
 import { useEffect } from 'react'
-import { LandingLayout } from '../layouts'
-import { PreviousOrders } from '../components'
-import { auth } from '../firebase'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { setUser } from '../redux/slices/userSlice'
+import { LandingLayout } from '../../layouts'
+import { PreviousOrders } from '../../components'
+import { auth } from '../../firebase'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { setUser } from '../../redux/slices/userSlice'
 
 // default imports
 import Link from 'next/link'
 
-interface HomePageProps {
+interface OrdersPageProps {
   data: Order[]
 }
 
-const Home: NextPage<HomePageProps> = ({ data }) => {
+const Orders: NextPage<OrdersPageProps> = ({ data }) => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(state => state.user.user)
 
@@ -76,7 +76,7 @@ const Home: NextPage<HomePageProps> = ({ data }) => {
   )
 }
 
-export default Home
+export default Orders
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const data: Order[] = [

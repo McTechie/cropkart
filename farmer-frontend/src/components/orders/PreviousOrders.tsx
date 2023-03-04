@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 // default imports
 import moment from 'moment'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface PreviousOrdersProps {
   data: Order[]
@@ -48,9 +49,12 @@ const PreviousOrders = ({ data }: PreviousOrdersProps) => {
               </p>
 
               <div className='flex space-x-2'>
-                <button className='hidden md:block btn mt-4 bg-emerald-500 p-2 rounded-lg text-white'>
+                <Link
+                  href={`/orders/${item?.id}`}
+                  className='hidden md:block btn mt-4 bg-emerald-500 p-2 rounded-lg text-white'
+                >
                   Track Order
-                </button>
+                </Link>
 
                 <button className='hidden md:block btn mt-4 bg-rose-400 p-2 rounded-lg text-white'>
                   Complaint

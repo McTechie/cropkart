@@ -32,7 +32,7 @@ const RegisterForm = ({ setCurrentForm, setConfirmationMessage }: RegisterFormPr
     // check if user exists in db
     const email: string | undefined = emailRef.current?.value
 
-    const querySnapshot = await getDocs(collection(db, 'farmers'))
+    const querySnapshot = await getDocs(collection(db, 'customers'))
     const user = querySnapshot.docs.find(doc => doc.data().email === email)
 
     // if user exists, return user and confirmation
@@ -58,7 +58,7 @@ const RegisterForm = ({ setCurrentForm, setConfirmationMessage }: RegisterFormPr
 
       if (!user) {
         // create user in db if user does not exist
-        const userRef = doc(db, 'farmers', email)
+        const userRef = doc(db, 'customers', email)
 
         await setDoc(userRef, {
           name,

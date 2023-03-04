@@ -44,7 +44,7 @@ const LandingLayout = ({ children }: LandingLayoutProps) => {
   return (
     <div>
       <Head>
-        <title>CropKart for Farmers</title>
+        <title>Where India loves to order - CropKart</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 

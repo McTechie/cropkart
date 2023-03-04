@@ -16,7 +16,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <div>
       <Head>
-        <title>CropKart for Farmers</title>
+        <title>Where India loves to order - CropKart</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
@@ -30,10 +30,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
               <ArrowUturnLeftIcon className='h-6 w-6' />
             </button>
 
-            <h1 className='text-3xl font-bold relative'>
+            <h1 className='text-3xl font-bold'>
               <span>crop</span>
               <span className='text-emerald-600'>kart</span>
-              <span className='absolute left-0 -bottom-3 text-xs'>Farmers</span>
             </h1>
           </div>
         </nav>
