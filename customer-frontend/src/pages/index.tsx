@@ -31,13 +31,11 @@ const Home: NextPage<HomePageProps> = ({ fruitsData, veggiesData }) => {
 
   return (
     <LandingLayout>
-      <div className='mt-16 md:mt-0'>
-        <ListingSection
-          highlightBg
-          title='Fresh Fruits to choose from'
-          data={fruitsData}
-        />
-      </div>
+      <ListingSection
+        highlightBg
+        title='Fresh Fruits to choose from'
+        data={fruitsData}
+      />
       <ListingSection
         title='Delicious Veggies for your palette'
         data={veggiesData}
