@@ -83,7 +83,7 @@ const Header = () => {
           {location && (
             <button
               onClick={handleGetLocation}
-              className='flex space-x-2 items-center mt-2 -mb-2'
+              className='flex space-x-2 justify-center items-center mt-2 -mb-2'
             >
               <MapPinIcon className='w-4 h-4 text-emerald-600 relative bottom-[0.15rem]' />
               <span>{location}</span>
