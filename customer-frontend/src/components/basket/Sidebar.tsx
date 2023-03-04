@@ -88,7 +88,7 @@ const Sidebar = () => {
           <button
             role='link'
             onClick={handleCheckout}
-            className='btn mt-4 '
+            className='btn mt-4 bg-emerald-500 py-2 rounded-lg text-white'
           >
             Proceed to Checkout
           </button>

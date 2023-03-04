@@ -46,6 +46,16 @@ const PreviousOrders = ({ data }: PreviousOrdersProps) => {
               <p className='text-sm whitespace-nowrap sm:text-xl self-end flex-1 text-right text-emerald-600'>
                 {item.images?.length} item&#40;s&#41;
               </p>
+
+              <div className='flex space-x-2'>
+                <button className='hidden md:block btn mt-4 bg-emerald-500 p-2 rounded-lg text-white'>
+                  Track Order
+                </button>
+
+                <button className='hidden md:block btn mt-4 bg-rose-400 p-2 rounded-lg text-white'>
+                  Complaint
+                </button>
+              </div>
       
               <p className='absolute top-2 right-2 w-40 lg:w-72 truncate text-xs whitespace-nowrap font-light'>
                 ORDER # {item?.id}
