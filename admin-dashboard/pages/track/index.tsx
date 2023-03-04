@@ -113,13 +113,13 @@ interface TrackInfo {
                           {selectedRow.startlocn}
                         </p>
                         <p>
-                          <strong>Vehicle Number:</strong> {selectedRow.starttime}
+                          <><strong>Vehicle Number:</strong> {selectedRow.starttime}</>
                         </p>
                         <p>
-                          <strong>Driver Name:</strong> {selectedRow.endlocn}
+                          <><strong>Driver Name:</strong> {selectedRow.endlocn}</>
                         </p>
                         <p>
-                          <strong>Phone Number:</strong> {selectedRow.endtime}
+                          <><strong>Phone Number:</strong> {selectedRow.endtime}</>
                         </p>
                       </div>
                     </td>

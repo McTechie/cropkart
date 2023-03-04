@@ -1,14 +1,17 @@
 import { app ,database} from '../../firebaseConfig';
 import { useState, useEffect } from 'react';
-import { collection, getDocs, query } from "@firebase/firestore";
 import { BsPlus } from "react-icons/bs";
 import FleetForm from "../../components/FleetForm";
+import { collection, getDocs, query, setDoc, doc, addDoc, where, deleteDoc} from "@firebase/firestore";
+import { useRouter } from 'next/router';
+import UpdateFleetForm from '../../components/UpdateFleetForm';
+
 interface FleetInfo {
     licensenumber: number;
     vehiclenumber: string;
     drivername: string;
     phoneno: number;
-    
+    fleetInfo: any[];
   }
   
   // const fleetInfo: FleetInfo[] = [
@@ -29,6 +32,9 @@ interface FleetInfo {
     const [selectedRow, setSelectedRow] = useState<FleetInfo | null>(null);
     const [isTfootOpen, setIsTfootOpen] = useState(false);
     const [ createFleet, setCreateFleet ] = useState(false);
+    const [ updateFleet, setUpdateFleet ] = useState(false)
+    const router = useRouter()
+
     const [fleetInfo, setFleetInfo] = useState<any[]>([]);
       const fleetDataFetch=async()=>{
         const q = query(collection(database, "fleet"));
@@ -40,6 +46,7 @@ interface FleetInfo {
           docs=[...docs,doc.data()]
         })
         setFleetInfo(docs);
+        console.log(fleetInfo)
       }
       useEffect(() => {
           fleetDataFetch();
@@ -58,13 +65,19 @@ interface FleetInfo {
 
     const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>, fleet: FleetInfo) => {
       e.stopPropagation();
+      setUpdateFleet(true)
       console.log(fleet)
     }
 
     
-    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>, fleet: FleetInfo) => {
+    const handleDeleteClick = async (e: React.MouseEvent<HTMLButtonElement>, fleet: FleetInfo) => {
       e.stopPropagation();
-
+      console.log(fleet.licensenumber)
+      const q = query(collection(database, "fleet"), where("licensenumber", "==", fleet.licensenumber));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((document) => deleteDoc(doc(database, "fleet", document.id )));
+      // router.reload();
+      
     }
 
     return (
@@ -77,7 +90,12 @@ interface FleetInfo {
           className="bg-slate-50 hover:bg-slate-200 p-2 text-sm rounded-sm font-medium my-5 flex items-center"><BsPlus className="mr-3 font-bold "/> Create Fleet</button>
         </div>
         {createFleet && (<div className="bg-slate-50 rounded-md min-h-full"><FleetForm /></div>)}
-        {!createFleet && <table className="bg-slate-50 rounded-md min-w-full ">
+        {updateFleet && (<div className="bg-slate-50 rounded-md min-h-full">
+        {/* <UpdateFleetForm fleetInfo={fleetInfo}/> */}
+        </div>
+        )
+        }
+        {!createFleet && !updateFleet && <table className="bg-slate-50 rounded-md min-w-full ">
             <thead>
             <tr>
                 <th className="border-b px-2 py-2">Driver Licence Number</th>

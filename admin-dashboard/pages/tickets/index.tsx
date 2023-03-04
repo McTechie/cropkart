@@ -10,12 +10,12 @@ interface TicketInfo {
   }
   
   // const TicketInfo: TicketInfo[] = [
-  //   { id: 1, type: 'Ship 1', message: 'Container Ship'},
-  //   { id: 1, type: 'Ship 1', message: 'Container Ship'},
-  //   { id: 1, type: 'Ship 1', message: 'Container Ship'},
-  //   { id: 1, type: 'Ship 1', message: 'Container Ship'},
-  //   { id: 1, type: 'Ship 1', message: 'Container Ship'},
-  //   { id: 1, type: 'Ship 1', message: 'Container Ship'},
+  //   { id: 1, type: 'Ship 1', message: 'Container Ship', resolved: false},
+  //   { id: 1, type: 'Ship 1', message: 'Container Ship', resolved: true},
+  //   { id: 1, type: 'Ship 1', message: 'Container Ship', resolved: false},
+  //   { id: 1, type: 'Ship 1', message: 'Container Ship', resolved: false},
+  //   { id: 1, type: 'Ship 1', message: 'Container Ship', resolved: false},
+  //   { id: 1, type: 'Ship 1', message: 'Container Ship', resolved: true},
 
   // ];
   
@@ -35,18 +35,20 @@ interface TicketInfo {
     },[]);
     
   
-    const [selectedValue, setSelectedValue] = useState<boolean | null>(null);
+    const [selectedValue, setSelectedValue] = useState<boolean>(false);
   
     const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>, ticket: TicketInfo) => {
       setSelectedValue(ticket.resolved);
     };
   
   
-    // const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, ticket: TicketInfo) => {
-    //   const updatedTicketInfo = TicketInfo.map(t =>
-    //     t.id === ticket.id ? { ...t, resolved: e.target.value === 'true' } : t);
-    //   setTicketInfo(updatedTicketInfo);
-    // };
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, id: number) => {
+      let updated: TicketInfo = TicketInfo.find(t => t.id === id)!
+      updated.resolved = !updated.resolved
+      setTicketInfo(ticketInfo => [...ticketInfo, updated]);
+    };
+
+
 
     return (
         <>
@@ -70,21 +72,21 @@ interface TicketInfo {
                
                 
                 <td className="px-4 py-2 text-center">
-                {/* {selectedValue === ticket.resolved ? (
-                  <select value={selectedValue} onChange={(e) => handleSelectChange(e, ticket)}>
-                    <option value={true}>True</option>
-                    <option value={false}>False</option>
+                {selectedValue === ticket.resolved ? (
+                  <select onChange={(e) => handleSelectChange(e, ticket.id)}>
+                    <option value={'true'}>True</option>
+                    <option value={'false'}>False</option>
                   </select>
                 ) : (
                   ticket.resolved.toString()
-                )} */}
+                )}
               </td>
                 <td className="px-4 py-2 text-center">
                 <button onClick={(e) => handleUpdateClick(e, ticket)} className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Update</button>
                 </td>
                 <td className="px-4 py-2 text-center">
-                <button
-                // nClick={(e) => handleDeleteClick(e, ticket)} 
+                <button 
+                // onClick={(e) => handleDeleteClick(e, ticket)} 
                 className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">Delete</button>
                 </td>
                 </tr>

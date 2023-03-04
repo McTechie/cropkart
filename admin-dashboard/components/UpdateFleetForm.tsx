@@ -11,9 +11,8 @@ type FleetInfo = {
     phoneno: number;
   };
   
-  
 
-  const FleetForm = () => {
+  const UpdateFleetForm = (props : FleetInfo) => {
     const router = useRouter()
 
     const [formState, setFormState] = useState<FleetInfo>({
@@ -29,27 +28,26 @@ type FleetInfo = {
     };
   
 
-    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      console.log(formState)
-      // const docRef = await addDoc(doc(database, "fleet"), {
-      const docRef = await addDoc(collection(database, "fleet"), {
-        licensenumber : formState.licensenumber,
-        vehiclenumber : formState.vehiclenumber,
-        drivername : formState.drivername,
-        phoneno : formState.phoneno
-      });
-      console.log(docRef)
-      router.reload()
+    // const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    //   event.preventDefault();
+    //   console.log(formState)
+    //   const docRef = await setDoc(doc(database, "fleet"), {
+    // //   const docRef = await setDoc(collection(database, "fleet"), {
+    //     licensenumber : formState.licensenumber,
+    //     vehiclenumber : formState.vehiclenumber,
+    //     drivername : formState.drivername,
+    //     phoneno : formState.phoneno
+    //   });
+    //   console.log(docRef)
+    //   router.push('/fleet')
       
-    }
+    // }
 
 
-    
     const handleUpdateSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       console.log(formState)
-      const docRef = await addDoc(collection(database, "fleet"), {
+      const docRef = await setDoc(doc(database, "fleet"), {
         licensenumber : formState.licensenumber,
         vehiclenumber : formState.vehiclenumber,
         drivername : formState.drivername,
@@ -121,12 +119,12 @@ type FleetInfo = {
         </div>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-semimbold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
+          onClick={handleUpdateSubmit}
         >
-          Submit
+          Update
         </button>
       </form>
     );
   };
   
-  export default FleetForm;
+  export default UpdateFleetForm;
