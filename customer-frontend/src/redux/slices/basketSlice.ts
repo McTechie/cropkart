@@ -31,8 +31,8 @@ export const basketSlice = createSlice({
 
       state.items = newBasket
     },
-    removeFromBasket: (state, action: PayloadAction<BasketItem>) => {
-      const index = state.items.findIndex(item => item.id === action.payload.id)
+    removeFromBasket: (state, action: PayloadAction<string>) => {
+      const index = state.items.findIndex(item => item.id === action.payload)
 
       let newBasket = [...state.items]
 
@@ -46,8 +46,8 @@ export const basketSlice = createSlice({
 
       state.items = newBasket
     },
-    removeAllFromBasket: (state, action: PayloadAction<BasketItem>) => {
-      const index = state.items.findIndex(item => item.id === action.payload.id)
+    removeAllFromBasket: (state, action: PayloadAction<string>) => {
+      const index = state.items.findIndex(item => item.id === action.payload)
 
       let newBasket = [...state.items]
 

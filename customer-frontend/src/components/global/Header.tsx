@@ -2,7 +2,7 @@
 import { MouseEvent, useState } from 'react'
 import { useRouter } from 'next/router'
 import { signOut } from 'firebase/auth'
-import { BackspaceIcon, ChevronDownIcon, ClockIcon, GlobeAsiaAustraliaIcon, MapPinIcon, ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import { BackspaceIcon, ChevronDownIcon, ClockIcon, GlobeAsiaAustraliaIcon, MapPinIcon, ShoppingCartIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/20/solid'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { setLocation } from '../../redux/slices/locationSlice'
 import { auth } from '../../firebase'
@@ -68,7 +68,7 @@ const Header = () => {
       <nav className={`fixed top-0 left-0 w-full z-50 bg-white shadow-md md:hidden text-gray-600 py-3 flex ${user ? 'justify-center' : 'justify-between px-6'}`}>
         {!user && (
           <Link href='/login'>
-            <UserCircleIcon className='h-10 w-10 text-gray-600' />
+            <ArrowRightOnRectangleIcon className='h-10 w-10 text-gray-600' />
           </Link>
         )}
 

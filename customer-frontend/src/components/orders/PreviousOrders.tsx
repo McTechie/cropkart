@@ -27,6 +27,7 @@ const PreviousOrders = ({ data }: PreviousOrdersProps) => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 * index }}
             viewport={{ once: true }}
+            key={item.id}
             className='relative border-[1.5px] border-gray-300 shadow-sm rounded-lg'
           >
             <div className='flex items-center p-5 space-x-10 bg-gray-100 text-sm text-gray-600 rounded-t-lg'>

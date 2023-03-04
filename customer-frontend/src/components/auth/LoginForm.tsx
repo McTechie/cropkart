@@ -26,7 +26,7 @@ const LoginForm = ({ setCurrentForm, setConfirmationMessage }: LoginFormProps) =
   const getCode = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    const phone = phoneRef.current?.value
+    const phone = phoneRef.current?.value.split(' ').join('')
 
     if (!phone) {
       alert('Please enter phone number')
