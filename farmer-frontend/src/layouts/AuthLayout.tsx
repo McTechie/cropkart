@@ -30,9 +30,10 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
               <ArrowUturnLeftIcon className='h-6 w-6' />
             </button>
 
-            <h1 className='text-3xl font-bold'>
+            <h1 className='text-4xl font-bold relative'>
               <span>crop</span>
               <span className='text-emerald-600'>kart</span>
+              <span className='absolute left-0 -bottom-3 text-xs'>Farmers</span>
             </h1>
           </div>
         </nav>
@@ -46,9 +47,10 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           </button>
 
           <Link href='/'>
-            <h1 className='text-3xl font-bold'>
+            <h1 className='text-3xl font-bold relative'>
               <span>crop</span>
               <span className='text-emerald-600'>kart</span>
+              <span className='absolute left-0 -bottom-3 text-xs'>Farmers</span>
             </h1>
           </Link>
         </nav>
