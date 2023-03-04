@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import { database} from '../../firebaseConfig';
 import { useState, useEffect } from 'react';
 import { collection, getDocs, query, Timestamp } from "@firebase/firestore";
-
-=======
-import { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import TripForm from "../../components/TripForm";
->>>>>>> a633f68145e4ed5252e0273a31908bebe34b05a2
 
 interface TrackInfo {
     startlocn: string;
@@ -18,7 +13,6 @@ interface TrackInfo {
   }
   
   const TrackTable: React.FC<TrackInfo> = () => {
-<<<<<<< HEAD
     function timestamptotime(timestamp:Timestamp) {
       const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
       const dateString = date.toLocaleString('en-IN');
@@ -41,7 +35,6 @@ interface TrackInfo {
       useEffect(() => {
           trackData();
         },[]);
-=======
     const [selectedRow, setSelectedRow] = useState<TrackInfo | null>(null);
     const [isTfootOpen, setIsTfootOpen] = useState(false);
     const [ createTrip, setCreateTrip ] = useState(false);
@@ -68,7 +61,6 @@ interface TrackInfo {
 
     }
 
->>>>>>> a633f68145e4ed5252e0273a31908bebe34b05a2
     return (
         <>
         <div className="mx-10">
@@ -82,40 +74,29 @@ interface TrackInfo {
             {!createTrip && <table className="bg-slate-50 rounded-md min-w-full ">
             <thead>
             <tr>
-                <th className="border-b px-4 py-2">Start Location</th>
-                <th className="border-b px-4 py-2">Start Time</th>
-                <th className="border-b px-4 py-2">End Location</th>
-                <th className="border-b px-4 py-2">End Time</th>
+                <th className="border-b px-4 py-2 text-center">Start Location</th>
+                <th className="border-b px-4 py-2 text-center">Start Time</th>
+                <th className="border-b px-4 py-2 text-center">End Location</th>
+                <th className="border-b px-4 py-2text-center">End Time</th>
             </tr>
             
             </thead>
-            <tbody>
-<<<<<<< HEAD
-            {trackInfo.map((track) => (
-                <tr  className="hover:bg-gray-200">
-                <td className="px-4 py-2">{track.startlocn}</td>
-                <td className="px-4 py-2">{timestamptotime(track.starttime)}</td>
-                <td className="px-4 py-2">{track.endlocn}</td>
-                <td className="px-4 py-2">{timestamptotime(track.endtime)}</td>
-               
-=======
-            {trackInfo.map((trip) => (
-                <tr key={trip.id} className="hover:bg-gray-200">
-                <td className="px-4 py-2 text-center">{trip.id}</td>
-                <td className="px-4 py-2 text-center">{trip.startlocn}</td>
-                <td className="px-4 py-2 text-center">{trip.starttime}</td>
-                <td className="px-4 py-2 text-center">{trip.endlocn}</td>
-                <td className="px-4 py-2 text-center">{trip.endtime}</td>
-                <td className="px-4 py-2 text-center">
-                
-                <button onClick={(e) => handleUpdateClick(e, trip)} className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Update</button>
-                </td>
-                <td className="px-4 py-2 text-center">
-                <button onClick={(e) => handleDeleteClick(e, trip)} className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">Delete</button>
-                </td>
->>>>>>> a633f68145e4ed5252e0273a31908bebe34b05a2
-                </tr>
-            ))}
+            <tbody> 
+              {trackInfo.map((trip) => (
+                  <tr className="hover:bg-gray-200">
+                  <td className="px-4 py-2 text-center">{trip.startlocn}</td>
+                  <td className="px-4 py-2 text-center">{timestamptotime(trip.starttime)}</td>
+                  <td className="px-4 py-2 text-center">{trip.endlocn}</td>
+                  <td className="px-4 py-2 text-center">{timestamptotime(trip.endtime)}</td>
+                  <td className="px-4 py-2 text-center">
+                  
+                  <button onClick={(e) => handleUpdateClick(e, trip)} className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Update</button>
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                  <button onClick={(e) => handleDeleteClick(e, trip)} className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">Delete</button>
+                  </td>
+                  </tr>
+              ))}
             </tbody>
               {selectedRow && (
                 <tfoot

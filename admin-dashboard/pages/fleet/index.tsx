@@ -3,9 +3,6 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, query } from "@firebase/firestore";
 import { BsPlus } from "react-icons/bs";
 import FleetForm from "../../components/FleetForm";
-import { getFirestoreData } from "../../getFirestroreData";
-
-
 interface FleetInfo {
     licensenumber: number;
     vehiclenumber: string;
@@ -32,11 +29,8 @@ interface FleetInfo {
     const [selectedRow, setSelectedRow] = useState<FleetInfo | null>(null);
     const [isTfootOpen, setIsTfootOpen] = useState(false);
     const [ createFleet, setCreateFleet ] = useState(false);
-    
-
-    const handleRowClick = (fleet: FleetInfo) => {
-      const [fleetInfo, setFleetInfo] = useState<any[]>([]);
-      const fleetData=async()=>{
+    const [fleetInfo, setFleetInfo] = useState<any[]>([]);
+      const fleetDataFetch=async()=>{
         const q = query(collection(database, "fleet"));
 
         const querySnapshot = await getDocs(q);
@@ -48,8 +42,11 @@ interface FleetInfo {
         setFleetInfo(docs);
       }
       useEffect(() => {
-          fleetData();
+          fleetDataFetch();
         },[]);
+
+    const handleRowClick = (fleet: FleetInfo) => {
+      
       if (fleet === selectedRow) {
         setSelectedRow(null);
         setIsTfootOpen(false);
@@ -143,15 +140,5 @@ interface FleetInfo {
    
   };
 
-  export async function getServerSideProps() {
-    const fleetData = await getFirestoreData('fleet');
-  
-    return {
-      props: {
-        fleetData,
-      },
-    };
-  }
-  
-  export default FleetTable;
+export default FleetTable;
 

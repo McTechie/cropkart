@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: `${process.env.NEXT_APP_API_KEY}`,
-  authDomain: `${process.env.NEXT_APP_AUTH_DOMAIN}`,
-  databaseURL: `${process.env.NEXT_APP_DATABASE_URL}`,
-  projectId: `${process.env.NEXT_APP_PROJECT_ID}`,
-  storageBucket: `${process.env.NEXT_APP_STORAGE_BUCKET}`,
-  messagingSenderId: `${process.env.NEXT_APP_MESSAGING_SENDER_ID}`,
-  appId: `${process.env.NEXT_APP_DATABASE_APP_ID}`,
-  measurementId: `${process.env.NEXT_APP_MEASUREMENT_ID}`,
+  apiKey: "AIzaSyBKI3LJU9bCy-46cVxSeufCeDOOjmw70bE",
+  authDomain: "cropkart-prod.firebaseapp.com",
+  databaseURL: "https://cropkart-prod-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "cropkart-prod",
+  storageBucket: "cropkart-prod.appspot.com",
+  messagingSenderId: "1043499973940",
+  appId: "1:1043499973940:web:b001ed15ff4b790885f961",
+  measurementId: "G-0BJC072D8Q"
 };
 
 // Initialize Firebase
