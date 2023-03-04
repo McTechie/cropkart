@@ -1,5 +1,13 @@
 // named imports
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+// import {
+//   useJsApiLoader,
+//   GoogleMap,
+//   Marker,
+//   Autocomplete,
+//   DirectionsRenderer,
+// } from '@react-google-maps/api'
 
 // default imports
 import moment from 'moment'
@@ -19,6 +27,46 @@ const data = {
 const Track = () => {
   const router = useRouter()
   const { id } = router.query
+
+  // const { isLoaded } = useJsApiLoader({
+  //   googleMapsApiKey: 'AIzaSyDbYH3Gun_JeB0hq-34x19H867jih5BflQ',
+  //   libraries: ['places'],
+  // })
+
+  // eslint-disable-next-line no-undef
+  // const [map, setMap] = useState<google.maps.Map>()
+  // const [directionsResponse, setDirectionsResponse] = useState(null)
+  // const [distance, setDistance] = useState('')
+  // const [duration, setDuration] = useState('')
+
+  // const originRef = useRef<React.MutableRefObject<HTMLInputElement>>(null)
+  // const destiantionRef = useRef<React.MutableRefObject<HTMLInputElement>>(null)
+
+  // async function calculateRoute() {
+  //   if (originRef.current?.value === '' || destiantionRef.current?.value === '') {
+  //     return
+  //   }
+  //   // eslint-disable-next-line no-undef
+  //   const directionsService = new google.maps.DirectionsService()
+  //   const results = await directionsService.route({
+  //     origin: originRef.current?.value,
+  //     destination: destiantionRef.current?.value,
+  //     // eslint-disable-next-line no-undef
+  //     travelMode: google.maps.TravelMode.DRIVING,
+  //   })
+  //   setDirectionsResponse(results)
+  //   setDistance(results.routes[0].legs[0].distance.text)
+  //   setDuration(results.routes[0].legs[0].duration.text)
+  // }
+
+  // function clearRoute() {
+  //   setDirectionsResponse(null)
+  //   setDistance('')
+  //   setDuration('')
+  //   originRef.current?.value = ''
+  //   destiantionRef.current?.value = ''
+  // }
+
 
   return (
     <div className='max-w-screen-lg px-6 py-4 mx-auto my-4 mt-20 md:mt-4'>
@@ -46,6 +94,27 @@ const Track = () => {
             Total: <span className='font-semibold ml-4'>₹{data.amount + data.shipping}</span>
           </p>
         </div>
+        
+        {/* map goes here */}
+        {/* <div>
+          <GoogleMap
+            center={{ lat: 19.079023, lng: 72.908012 }}
+            zoom={15}
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            options={{
+              zoomControl: false,
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
+            // onLoad={(map: google.maps.Map) =>  setMap(map)}
+          >
+            <Marker position={{ lat: 19.079023, lng: 72.908012 }} />
+            {directionsResponse && (
+              <DirectionsRenderer directions={directionsResponse} />
+            )}
+          </GoogleMap>
+        </div> */}
       </div>
     </div>
   )

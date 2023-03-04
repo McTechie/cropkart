@@ -51,7 +51,9 @@ const Basket: NextPage<BasketPageProps> = ({ data }) => {
       {user ? (
         <div className='max-w-screen-lg px-6 py-4 mx-auto my-4 mt-20 md:mt-4 flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0'>
           <CurrentBasket />
-          <Sidebar />
+          <div className='px-0 mx-0'>
+            <Sidebar />
+          </div>
         </div>
       ) : (
         <div className='max-w-screen-lg px-6 py-4 mx-auto my-4 mt-20 md:mt-4'>    

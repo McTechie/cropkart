@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",
+    "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.3",
+    "@stripe/stripe-js": "^1.48.0",
     "firebase": "^9.17.2",
     "firebase-admin": "^11.5.0",
     "framer-motion": "^10.0.1",

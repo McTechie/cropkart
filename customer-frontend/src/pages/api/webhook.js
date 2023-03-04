@@ -20,7 +20,7 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET
 
 const fulfillOrder = async (session) => {
   return db
-    .collection('users').doc(session.metadata.email)
+    .collection('customers').doc(session.metadata.phone)
     .collection('orders').doc(session.id).set({
       amount: session.amount_total / 100,
       shipping: session.total_details.amount_shipping / 100,
