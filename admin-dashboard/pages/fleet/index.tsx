@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { app ,database} from '../../firebaseConfig';
+import { useState, useEffect } from 'react';
+import { collection, getDocs, query } from "@firebase/firestore";
 import { BsPlus } from "react-icons/bs";
 import FleetForm from "../../components/FleetForm";
-import { getFirestoreData } from "../../getFirestroreData";
-
-
 interface FleetInfo {
     licensenumber: number;
     vehiclenumber: string;
@@ -12,15 +11,15 @@ interface FleetInfo {
     
   }
   
-  const fleetInfo: FleetInfo[] = [
-    { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 2, vehiclenumber: 'Ship 2', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 3, vehiclenumber: 'Ship 3', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 4, vehiclenumber: 'Ship 4', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 5, vehiclenumber: 'Ship 5', drivername: 'Container Ship', phoneno: 10000},
-    { licensenumber: 6, vehiclenumber: 'Ship 6', drivername: 'Container Ship', phoneno: 10000},
+  // const fleetInfo: FleetInfo[] = [
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
+  //   { licensenumber: 1, vehiclenumber: 'Ship 1', drivername: 'Container Ship', phoneno: 10000},
 
-  ];
+  // ];
 
   interface FleetTableProps {
     fleetData: FleetInfo[];
@@ -30,9 +29,24 @@ interface FleetInfo {
     const [selectedRow, setSelectedRow] = useState<FleetInfo | null>(null);
     const [isTfootOpen, setIsTfootOpen] = useState(false);
     const [ createFleet, setCreateFleet ] = useState(false);
-    console.log(fleetData);
+    const [fleetInfo, setFleetInfo] = useState<any[]>([]);
+      const fleetDataFetch=async()=>{
+        const q = query(collection(database, "fleet"));
+
+        const querySnapshot = await getDocs(q);
+        var docs: any[]=[];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          docs=[...docs,doc.data()]
+        })
+        setFleetInfo(docs);
+      }
+      useEffect(() => {
+          fleetDataFetch();
+        },[]);
 
     const handleRowClick = (fleet: FleetInfo) => {
+      
       if (fleet === selectedRow) {
         setSelectedRow(null);
         setIsTfootOpen(false);
@@ -66,7 +80,7 @@ interface FleetInfo {
         {!createFleet && <table className="bg-slate-50 rounded-md min-w-full ">
             <thead>
             <tr>
-                <th className="border-b px-4 py-2">Driver Licence Number</th>
+                <th className="border-b px-2 py-2">Driver Licence Number</th>
                 <th className="border-b px-4 py-2">Vehicle Number</th>
                 <th className="border-b px-4 py-2">Driver Name</th>
                 <th className="border-b px-4 py-2">Phone Number</th>
@@ -89,6 +103,7 @@ interface FleetInfo {
     
                 </tr>
             ))}
+
             </tbody>
             {selectedRow && (
         <tfoot
@@ -125,15 +140,5 @@ interface FleetInfo {
    
   };
 
-  export async function getServerSideProps() {
-    const fleetData = await getFirestoreData('fleet');
-  
-    return {
-      props: {
-        fleetData,
-      },
-    };
-  }
-  
-  export default FleetTable;
+export default FleetTable;
 
