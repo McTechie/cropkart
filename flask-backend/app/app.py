@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 # from celery_config import *
 import requests
 from bs4 import BeautifulSoup
+from firebase.firebase_config import db as fire_db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
@@ -100,13 +101,21 @@ class VegPrices(Resource):
         list_of_rows = [rows[0][i:i+6] for i in range(0, len(rows[0]), 6)]
         response=[]
         for row in list_of_rows:
+            
             res={
                 'name':row[1],
                 'wholesale_price':row[2],
                 'type':'vegetable',
-                'retail_price':row[3][0]+row[3][6:]
+                'retail_price':row[3][0]+row[3].split("-")[1].strip()
             }
             response.append(res)
+        collection_ref = fire_db.collection('products')
+        for i, dict in enumerate(response):
+            # Generate a new document ID for each dictionary
+
+            doc_ref = collection_ref.document(f'veg{i}')
+            # Set the document data to the dictionary
+            doc_ref.set(dict)
         return(response)
     
 
@@ -143,13 +152,21 @@ class VegPrices(Resource):
         list_of_rows = [rows[0][i:i+6] for i in range(0, len(rows[0]), 6)]
         response=[]
         for row in list_of_rows:
+            
             res={
                 'name':row[1],
-                'type':'fruit',
                 'wholesale_price':row[2],
-                'retail_price':row[3][0]+row[3][6:]
+                'type':'fruit',
+                'retail_price':row[3][0]+row[3].split("-")[1].strip()
             }
             response.append(res)
+        collection_ref = fire_db.collection('products')
+        for i, dict in enumerate(response):
+            # Generate a new document ID for each dictionary
+
+            doc_ref = collection_ref.document(f'fruit{i}')
+            # Set the document data to the dictionary
+            doc_ref.set(dict)
         return(response)
 
 
