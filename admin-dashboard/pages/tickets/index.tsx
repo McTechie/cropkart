@@ -48,6 +48,8 @@ interface TicketInfo {
       setTicketInfo(ticketInfo => [...ticketInfo, updated]);
     };
 
+
+
     return (
         <>
         <div className="mx-10">
